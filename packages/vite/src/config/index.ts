@@ -54,7 +54,10 @@ export default (options: ResolvedOptions, config: DynamicConfiguration): Plugin 
 				// to the disk and force-reload the dev server
 				// Check for controller changes as well to support spatie/laravel-route-attributes
 				// TODO make this configurable
-				if (/routes\/.*\.php$/.test(file) || /app\/Http\/Controllers\/.*\.php$/.test(file) || /routes\.php$/.test(file)) {
+				if (/routes\/.*\.php$/.test(file)
+					|| /app\/Http\/Controllers\/.*\.php$/.test(file)
+					|| /app\/Http\/Middlewares\/.*\.php$/.test(file)
+					|| /routes\.php$/.test(file)) {
 					return await forceRestart('Routing changed')
 				}
 
