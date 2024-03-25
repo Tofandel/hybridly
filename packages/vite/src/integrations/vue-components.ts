@@ -51,7 +51,7 @@ async function getVueComponentsOptions(options: ResolvedOptions, config: Dynamic
 				...(shouldImportRadix ? [await RadixResolver(options?.vueComponents?.radixPrefix || 'Radix')] : []),
 				ProvidedComponentListResolver(config),
 				HybridlyResolver(options, config),
-			],
+			].filter(Boolean),
 		},
 		options.vueComponents ?? {},
 		{ overwriteArray: false },
@@ -59,8 +59,10 @@ async function getVueComponentsOptions(options: ResolvedOptions, config: Dynamic
 }
 
 export async function RadixResolver(prefix: string) {
-	const radix = await importPackage('radix-vue/resolver')
-	return radix.default({ prefix })
+	try {
+		const radix = await importPackage('radix-vue/resolver')
+		return radix.default?.({ prefix }) ?? radix?.({ prefix })
+	} catch {}
 }
 
 export function HybridlyResolver(options: ViteOptions, config: DynamicConfiguration): ComponentResolver[] {

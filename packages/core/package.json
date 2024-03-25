@@ -1,6 +1,6 @@
 {
   "name": "@hybridly/core",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Core functionality of Hybridly",
   "keywords": [
     "hybridly",
@@ -17,6 +17,10 @@
   "homepage": "https://github.com/hybridly/hybridly#readme",
   "bugs": {
     "url": "https://github.com/hybridly/hybridly/issues"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
   },
   "sideEffects": false,
   "files": [

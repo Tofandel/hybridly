@@ -1,6 +1,6 @@
 {
   "name": "@hybridly/vue",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Vue adapter for Hybridly",
   "keywords": [
     "hybridly",
@@ -20,6 +20,10 @@
   },
   "funding": "https://github.com/sponsors/innocenzi",
   "author": "Enzo Innocenzi <enzo@innocenzi.dev>",
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@hybridly/utils",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Utils used in Hybridly packages",
   "keywords": [
     "hybridly"
@@ -17,6 +17,10 @@
   "homepage": "https://github.com/hybridly/hybridly/tree/main/packages/config#readme",
   "bugs": {
     "url": "https://github.com/hybridly/hybridly/issues"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
   },
   "sideEffects": false,
   "files": [

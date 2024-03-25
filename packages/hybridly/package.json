@@ -1,6 +1,6 @@
 {
   "name": "hybridly",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Solution to develop server-driven, client-rendered applications",
   "keywords": [
     "hybridly",
@@ -17,6 +17,10 @@
   "homepage": "https://github.com/hybridly/hybridly#readme",
   "bugs": {
     "url": "https://github.com/hybridly/hybridly/issues"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
   },
   "sideEffects": false,
   "files": [
