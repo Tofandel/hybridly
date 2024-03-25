@@ -2,15 +2,11 @@
 
 namespace Hybridly\Commands;
 
-use Hybridly\Hybridly;
-use Hybridly\Support\Configuration\Configuration;
-use Hybridly\Support\RouteExtractor;
-use Hybridly\Support\Version;
 use Illuminate\Console\Command;
 
 class PrintConfigurationCommand extends Command
 {
-    protected $signature = 'hybridly:config {--pretty} {buildPath?}';
+    protected $signature = 'hybridly:config {--pretty} {basePath?}';
     protected $description = 'Prints the internal Hybridly configuration.';
     protected $hidden = true;
 
@@ -23,9 +19,12 @@ class PrintConfigurationCommand extends Command
 
     public function handle(): int
     {
-        $buildPath = $this->argument('buildPath');
-        if (!empty($buildPath)) {
-            $this->hybridly->getViewFinder()->setBasePath(str_starts_with($buildPath, \DIRECTORY_SEPARATOR) ? $buildPath : base_path($buildPath));
+        $basePath = $this->argument('basePath');
+        if (!empty($basePath)) {
+            $basePath = str_starts_with($basePath, \DIRECTORY_SEPARATOR) ? $basePath : base_path($basePath);
+            $this->hybridly->getViewFinder()->setBasePath(str_starts_with($basePath, \DIRECTORY_SEPARATOR) ? $basePath : base_path($basePath));
+        } else {
+            $basePath = base_path();
         }
         $configuration = [
             'versions' => [
@@ -37,7 +36,8 @@ class PrintConfigurationCommand extends Command
             'architecture' => [
                 'root_directory' => Configuration::get()->architecture->rootDirectory,
                 'components_directory' => Configuration::get()->architecture->componentsDirectory,
-                'application_main_path' => Configuration::get()->architecture->getApplicationMainPath(),
+                'application_main_path' => str(base_path(Configuration::get()->architecture->getApplicationMainPath()))
+                    ->replaceStart($basePath, '')->ltrim('/\\')->toString(),
             ],
             'components' => [
                 'eager' => Configuration::get()->architecture->eagerLoadViews,
