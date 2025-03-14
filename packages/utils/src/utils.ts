@@ -27,16 +27,14 @@ export function match<TValue extends string | number = string, TReturnValue = un
 			? lookup[value]
 			: lookup.default
 
-		return typeof returnValue === 'function' ? returnValue(...args) : returnValue
+		return typeof returnValue === 'function' ? returnValue(...args) : returnValue as TReturnValue
 	}
 
 	const handlers = Object.keys(lookup)
 		.map((key) => `"${key}"`)
 		.join(', ')
 
-	const error = new Error(`Tried to handle "${value}" but there is no handler defined. Only defined handlers are: ${handlers}.`)
-
-	throw error
+	throw new Error(`Tried to handle "${value}" but there is no handler defined. Only defined handlers are: ${handlers}.`)
 }
 
 export function value<T>(value: T | (() => T)): T {
