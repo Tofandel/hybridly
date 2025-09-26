@@ -1,7 +1,6 @@
 /* eslint-disable jsdoc/check-alignment */
 import type { AxiosResponse } from 'axios'
-import type { InternalRouterContext } from '../context'
-import { getRouterContext } from '../context'
+import { type InternalRouterContext, getInternalRouterContext } from '../context'
 import type { Errors, HybridPayload, HybridRequestOptions, InternalNavigationOptions, Progress } from '../router'
 import type { MaybePromise } from '../types'
 
@@ -124,7 +123,7 @@ export interface HookOptions {
  * Registers a global hook.
  */
 export function appendCallbackToHooks<T extends keyof Hooks>(hook: T, fn: Hooks[T]): () => void {
-	const hooks = getRouterContext().hooks
+	const hooks = getInternalRouterContext(true).hooks
 
 	hooks[hook] = [...(hooks[hook] ?? []), fn] as Hooks[T][]
 

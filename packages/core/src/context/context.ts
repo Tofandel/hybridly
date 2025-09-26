@@ -11,7 +11,9 @@ import type { InternalRouterContext, RouterContext, RouterContextOptions, SetCon
 
 const state = {
 	initialized: false,
-	context: {} as InternalRouterContext,
+	context: {
+		hooks: {},
+	} as InternalRouterContext,
 }
 
 /** Gets the current context. */
@@ -20,8 +22,8 @@ export function getRouterContext(): RouterContext {
 }
 
 /** Gets the current context, but not in read-only. */
-export function getInternalRouterContext(): InternalRouterContext {
-	if (!state.initialized) {
+export function getInternalRouterContext(hooksOnly = false): InternalRouterContext {
+	if (!hooksOnly && !state.initialized) {
 		throw new Error('Hybridly is not initialized.')
 	}
 
@@ -45,7 +47,7 @@ export async function initializeContext(options: RouterContextOptions): Promise<
 		axios: registerAxios(options.axios ?? axios.create()),
 		routing: options.routing,
 		preloadCache: new Map(),
-		hooks: {},
+		hooks: state.context.hooks,
 		memo: {},
 	}
 

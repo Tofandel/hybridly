@@ -3,8 +3,8 @@ import type { PartialDeep } from 'type-fest'
 import type { HttpResponseInit, RequestHandler } from 'msw'
 import { HttpResponse } from 'msw'
 import type { RouterContext, RouterContextOptions } from '../src/context'
+import { getInternalRouterContext, initializeContext } from '../src/context'
 import { HYBRIDLY_HEADER } from '../src/constants'
-import { initializeContext } from '../src/context'
 import { createRouter } from '../src/router/router'
 import type { HybridPayload } from '../src/router'
 import { http } from './server'
@@ -33,7 +33,11 @@ export function makeRouterContextOptions(options: PartialDeep<RouterContextOptio
 	})
 }
 
-export async function fakeRouterContext(options: PartialDeep<RouterContextOptions> = {}): Promise<RouterContext> {
+export async function fakeRouterContext(options: PartialDeep<RouterContextOptions> = {}, resetHooks = true): Promise<RouterContext> {
+	if (resetHooks) {
+		getInternalRouterContext(true).hooks = {}
+	}
+
 	return await initializeContext(makeRouterContextOptions(options))
 }
 
